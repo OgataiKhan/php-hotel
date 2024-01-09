@@ -1,4 +1,8 @@
 <?php
+$parking_input = $_GET['parking'] ?? 'no';
+$vote_input = $_GET['vote'] ?? 'none';
+
+// Data
 $hotels = [
   [
     'name' => 'Hotel Belvedere',
@@ -63,6 +67,14 @@ $hotels = [
         <option value="yes">Yes</option>
         <option value="no">No</option>
       </select>
+      <select name="vote" class="form-select form-select-lg mb-3" aria-label="Minimum vote">
+        <option value="none" selected>Minimum vote?</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
       <button type="submit" class="btn btn-primary">Filter</button>
     </form>
     <!-- /Filter form -->
@@ -77,7 +89,7 @@ $hotels = [
       </tr>
       <?php
       foreach ($hotels as $hotel) {
-        if ($_GET['parking'] === 'no' || ($_GET['parking'] === 'yes' && $hotel['parking'] === true)) {
+        if ((!isset($parking_input) || $parking_input === 'no' || ($parking_input === 'yes' && $hotel['parking'] === true)) && ($vote_input === 'none' || $hotel['vote'] >= $vote_input)) {
           echo '<tr>';
         foreach ($hotel as $info) {
           if ($info === true) {
