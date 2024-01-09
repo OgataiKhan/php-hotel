@@ -52,14 +52,11 @@ $hotels = [
   <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <!-- /Bootstrap -->
-  <!-- My css -->
-  <link rel="stylesheet" href="css/style.css">
-  <!-- /My css -->
 </head>
 
 <body>
   <main class="container">
-    <h1 class="text-center">Hotels</h1>
+    <h1 class="text-center pt-5 pb-3">Hotels</h1>
     <!-- Filter form -->
     <form action="index.php" method="GET">
       <select name="parking" class="form-select form-select-lg mb-3" aria-label="Parking requirement">
@@ -75,11 +72,13 @@ $hotels = [
         <option value="4">4</option>
         <option value="5">5</option>
       </select>
-      <button type="submit" class="btn btn-primary">Filter</button>
+      <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary">Filter</button>
+      </div>
     </form>
     <!-- /Filter form -->
     <!-- Hotels Table -->
-    <table class="table">
+    <table class="table mt-4">
       <tr>
         <th>Name</th>
         <th>Description</th>
@@ -89,18 +88,18 @@ $hotels = [
       </tr>
       <?php
       foreach ($hotels as $hotel) {
-        if ((!isset($parking_input) || $parking_input === 'no' || ($parking_input === 'yes' && $hotel['parking'] === true)) && ($vote_input === 'none' || $hotel['vote'] >= $vote_input)) {
+        if (($parking_input === 'no' || ($parking_input === 'yes' && $hotel['parking'] === true)) && ($vote_input === 'none' || $hotel['vote'] >= $vote_input)) {
           echo '<tr>';
-        foreach ($hotel as $info) {
-          if ($info === true) {
-            echo "<td>Yes</td>";
-          } elseif ($info === false) {
-            echo "<td>No</td>";
-          } else {
-            echo "<td>$info</td>";
+          foreach ($hotel as $info) {
+            if ($info === true) {
+              echo "<td>Yes</td>";
+            } elseif ($info === false) {
+              echo "<td>No</td>";
+            } else {
+              echo "<td>$info</td>";
+            };
           };
-        };
-        echo '</tr>';
+          echo '</tr>';
         };
       };
       ?>
