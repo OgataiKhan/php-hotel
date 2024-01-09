@@ -56,6 +56,17 @@ $hotels = [
 <body>
   <main class="container">
     <h1 class="text-center">Hotels</h1>
+    <!-- Filter form -->
+    <form action="index.php" method="GET">
+      <select name="parking" class="form-select form-select-lg mb-3" aria-label="Parking requirement">
+        <option value="no" selected>Parking required?</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+      <button type="submit" class="btn btn-primary">Filter</button>
+    </form>
+    <!-- /Filter form -->
+    <!-- Hotels Table -->
     <table class="table">
       <tr>
         <th>Name</th>
@@ -66,7 +77,8 @@ $hotels = [
       </tr>
       <?php
       foreach ($hotels as $hotel) {
-        echo '<tr>';
+        if ($_GET['parking'] === 'no' || ($_GET['parking'] === 'yes' && $hotel['parking'] === true)) {
+          echo '<tr>';
         foreach ($hotel as $info) {
           if ($info === true) {
             echo "<td>Yes</td>";
@@ -77,9 +89,11 @@ $hotels = [
           };
         };
         echo '</tr>';
+        };
       };
       ?>
     </table>
+    <!-- /Hotels Table -->
   </main>
 </body>
 
